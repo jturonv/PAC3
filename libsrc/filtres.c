@@ -1,10 +1,35 @@
+/**
+* @file filtres.c
+* @author Josep Turón i Viñas
+* @version 2.0
+* @date Desembre del 2015
+* @brief Codi de les funcions de filtres
+* @section Descripció
+* Aquest fitxer conté el codi font escrit amb llenguatge C d'una sèrie de filtres que actuen sobre un fitxer de text passat com a paràmetre d'entrada, i realitzen diverses operacions sobre ell.
+* @attention Cal disposar d'un arxiu de text en format pla per a poder executar aquest codi.
+* @section Llicència
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation; either version 2 of
+* the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but
+* WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details at
+* https://www.gnu.org/copyleft/gpl.html
+*/
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "filtres.h"
 
-
+/**
+* Aquesta funció rep una variable de tipus enter (num) i mitjançant un punter de memòria la recorre caràcter a caràcter, l'imprimeix al dispositiu de sortida (per defecte en pantalla), i avança fins al caràcter següent.
+* @brief Funció que serveix per imprimir per pantalla el contingut d'una variable caràcter a caràcter. No retorna cap valor (void).
+* @param num Variable de tipus enter que volem imprimir en pantalla. Paràmetre d'entrada.
+*/
 void printstr(int num)
 {
 	int aux, i;
@@ -17,7 +42,11 @@ void printstr(int num)
         sprintf(nstr, "%d ", num);
         write( 1, nstr, strlen( nstr ) );
 }
-
+/**
+* Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i el va imprimint pel dispositiu de sortida, fins a completar les 3 primeres línies del fitxer, que detecta analitzant el caràcter de salt de línia \n i augmentant un comptador (count) fins arribar a 3.
+* @brief Filtre que mostra les tres primeres línies del fitxer d'entrada. No retorna cap valor (void).
+* @param fd Descriptor del fitxer d'entrada. Paràmetre d'entrada.
+*/
 void fs_head( int fd )
 {
 	int count = 0;
@@ -29,6 +58,11 @@ void fs_head( int fd )
 	}
 }
 
+/**
+* Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i l'analitza detectant caràcters separadors de paraules o línies. Utilitza unes variables internes (nc, np, nl) per portar el compte del número de caràcters, paraules i línies del fitxer i crida a la funció printstr que les imprimirà pel dispositiu de sortida.
+* @brief Filtre que compta el número de caràcters, paraules i línies del fitxer d'entrada. No retorna cap valor (void).
+* @param fd Descriptor del fitxer d'entrada. Paràmetre d'entrada.
+*/
 void fs_wc( int fd )
 {
 	int nl = 0, np = 0, nc = 0, sep = 0;
@@ -51,6 +85,11 @@ void fs_wc( int fd )
 	write( 1, &c, 1 );
 }
 
+/**
+* Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i l'analitza detectant caràcters separadors de línies. Utilitza una variable interna per portar el compte del número de línia (nl), a cada salt crida a la funció printstr que imprimeix aquest número de línia pel dispositiu de sortida i a continuació imprimeix un a un els caràcters de la línia, fins al següent salt.
+* @brief Filtre que numera les línies del fitxer d'entrada. No retorna cap valor (void).
+* @param fd Descriptor del fitxer d'entrada. Paràmetre d'entrada.
+*/
 void fs_nl( int fd )
 {
 	int nl = 1, new = 1;
@@ -67,6 +106,12 @@ void fs_nl( int fd )
 	}
 }
 
+/**
+* Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i un número enter (col), amb la funció read dins un bucle tracta el fitxer caràcter a caràcter i l'analitza detectant caràcters separadors de paraules o línies. Utilitza una variable interna (pal) per a portar el compte del número de paraula que està tractant, i si aquesta correspon a la posició introduïda amb la posició col, la imprimeix pel dispositiu de sortida mitjançant la funció printstr.
+* @brief Filtre que mostra només la paraula en la posició indicada del fitxer d'entrada. No retorna cap valor (void).
+* @param fd Descriptor del fitxer d'entrada. Paràmetre d'entrada.
+* @param col Valor que indica la posició de la paraula que es desitja mostrar. Paràmetre d'entrada.
+*/
 void fs_cut( int fd, int col )
 {
 	char c;

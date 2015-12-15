@@ -1,0 +1,156 @@
+\hypertarget{filtres_8c}{\section{\-Referència del \-Fitxer libsrc/filtres.c}
+\label{filtres_8c}\index{libsrc/filtres.\-c@{libsrc/filtres.\-c}}
+}
+
+
+\-Codi de les funcions de filtres.  
+
+
+{\ttfamily \#include $<$unistd.\-h$>$}\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include \char`\"{}filtres.\-h\char`\"{}}\*
+\subsection*{\-Funcions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{filtres_8c_a6bc4e3de38e285d91873339766f429b8}{printstr} (int num)
+\begin{DoxyCompactList}\small\item\em \-Funció que serveix per imprimir per pantalla el contingut d'una variable caràcter a caràcter. \-No retorna cap valor (void). \end{DoxyCompactList}\item 
+void \hyperlink{filtres_8c_a70af81d8e422b34c60277715a0bf44f5}{fs\-\_\-head} (int fd)
+\begin{DoxyCompactList}\small\item\em \-Filtre que mostra les tres primeres línies del fitxer d'entrada. \-No retorna cap valor (void). \end{DoxyCompactList}\item 
+void \hyperlink{filtres_8c_afd7a1b36922bf518c9bd7e8a848df96a}{fs\-\_\-wc} (int fd)
+\begin{DoxyCompactList}\small\item\em \-Filtre que compta el número de caràcters, paraules i línies del fitxer d'entrada. \-No retorna cap valor (void). \end{DoxyCompactList}\item 
+void \hyperlink{filtres_8c_a643063470b5a645fd962404c2850c3bd}{fs\-\_\-nl} (int fd)
+\begin{DoxyCompactList}\small\item\em \-Filtre que numera les línies del fitxer d'entrada. \-No retorna cap valor (void). \end{DoxyCompactList}\item 
+void \hyperlink{filtres_8c_a9a8dabec27d785f7ec81e8a498b9f5a3}{fs\-\_\-cut} (int fd, int col)
+\begin{DoxyCompactList}\small\item\em \-Filtre que mostra només la paraula en la posició indicada del fitxer d'entrada. \-No retorna cap valor (void). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Descripció \-Detallada}
+\-Codi de les funcions de filtres. \begin{DoxyAuthor}{\-Autor}
+\-Josep \-Turón i \-Viñas 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Versió}
+2.\-0 
+\end{DoxyVersion}
+\begin{DoxyDate}{\-Data}
+\-Desembre del 2015 
+\end{DoxyDate}
+\hypertarget{filtres_8c_Descripció}{}\subsection{\-Descripció}\label{filtres_8c_Descripció}
+\-Aquest fitxer conté el codi font escrit amb llenguatge \-C d'una sèrie de filtres que actuen sobre un fitxer de text passat com a paràmetre d'entrada, i realitzen diverses operacions sobre ell. \begin{DoxyAttention}{\-Atenció}
+\-Cal disposar d'un arxiu de text en format pla per a poder executar aquest codi. 
+\end{DoxyAttention}
+\hypertarget{filtres_8h_Llicència}{}\subsection{\-Llicència}\label{filtres_8h_Llicència}
+\-This program is free software; you can redistribute it and/or modify it under the terms of the \-G\-N\-U \-General \-Public \-License as published by the \-Free \-Software \-Foundation; either version 2 of the \-License, or (at your option) any later version.
+
+\-This program is distributed in the hope that it will be useful, but \-W\-I\-T\-H\-O\-U\-T \-A\-N\-Y \-W\-A\-R\-R\-A\-N\-T\-Y; without even the implied warranty of \-M\-E\-R\-C\-H\-A\-N\-T\-A\-B\-I\-L\-I\-T\-Y or \-F\-I\-T\-N\-E\-S\-S \-F\-O\-R \-A \-P\-A\-R\-T\-I\-C\-U\-L\-A\-R \-P\-U\-R\-P\-O\-S\-E. \-See the \-G\-N\-U \-General \-Public \-License for more details at \href{https://www.gnu.org/copyleft/gpl.html}{\tt https\-://www.\-gnu.\-org/copyleft/gpl.\-html} 
+
+\-Definició al fitxer \hyperlink{filtres_8c_source}{filtres.\-c}.
+
+
+
+\subsection{\-Documentació de les \-Funcions}
+\hypertarget{filtres_8c_a9a8dabec27d785f7ec81e8a498b9f5a3}{\index{filtres.\-c@{filtres.\-c}!fs\-\_\-cut@{fs\-\_\-cut}}
+\index{fs\-\_\-cut@{fs\-\_\-cut}!filtres.c@{filtres.\-c}}
+\subsubsection[{fs\-\_\-cut}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf fs\-\_\-cut} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{int}]{col}
+\end{DoxyParamCaption}
+)}}\label{filtres_8c_a9a8dabec27d785f7ec81e8a498b9f5a3}
+
+
+\-Filtre que mostra només la paraula en la posició indicada del fitxer d'entrada. \-No retorna cap valor (void). 
+
+\-Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i un número enter (col), amb la funció read dins un bucle tracta el fitxer caràcter a caràcter i l'analitza detectant caràcters separadors de paraules o línies. \-Utilitza una variable interna (pal) per a portar el compte del número de paraula que està tractant, i si aquesta correspon a la posició introduïda amb la posició col, la imprimeix pel dispositiu de sortida mitjançant la funció printstr. 
+\begin{DoxyParams}{\-Paràmetres}
+{\em fd} & \-Descriptor del fitxer d'entrada. \-Paràmetre d'entrada. \\
+\hline
+{\em col} & \-Valor que indica la posició de la paraula que es desitja mostrar. \-Paràmetre d'entrada. \\
+\hline
+\end{DoxyParams}
+
+
+\-Definició a la línia 115 del fitxer filtres.\-c.
+
+\hypertarget{filtres_8c_a70af81d8e422b34c60277715a0bf44f5}{\index{filtres.\-c@{filtres.\-c}!fs\-\_\-head@{fs\-\_\-head}}
+\index{fs\-\_\-head@{fs\-\_\-head}!filtres.c@{filtres.\-c}}
+\subsubsection[{fs\-\_\-head}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf fs\-\_\-head} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{filtres_8c_a70af81d8e422b34c60277715a0bf44f5}
+
+
+\-Filtre que mostra les tres primeres línies del fitxer d'entrada. \-No retorna cap valor (void). 
+
+\-Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i el va imprimint pel dispositiu de sortida, fins a completar les 3 primeres línies del fitxer, que detecta analitzant el caràcter de salt de línia \par
+ i augmentant un comptador (count) fins arribar a 3. 
+\begin{DoxyParams}{\-Paràmetres}
+{\em fd} & \-Descriptor del fitxer d'entrada. \-Paràmetre d'entrada. \\
+\hline
+\end{DoxyParams}
+
+
+\-Definició a la línia 50 del fitxer filtres.\-c.
+
+\hypertarget{filtres_8c_a643063470b5a645fd962404c2850c3bd}{\index{filtres.\-c@{filtres.\-c}!fs\-\_\-nl@{fs\-\_\-nl}}
+\index{fs\-\_\-nl@{fs\-\_\-nl}!filtres.c@{filtres.\-c}}
+\subsubsection[{fs\-\_\-nl}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf fs\-\_\-nl} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{filtres_8c_a643063470b5a645fd962404c2850c3bd}
+
+
+\-Filtre que numera les línies del fitxer d'entrada. \-No retorna cap valor (void). 
+
+\-Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i l'analitza detectant caràcters separadors de línies. \-Utilitza una variable interna per portar el compte del número de línia (nl), a cada salt crida a la funció printstr que imprimeix aquest número de línia pel dispositiu de sortida i a continuació imprimeix un a un els caràcters de la línia, fins al següent salt. 
+\begin{DoxyParams}{\-Paràmetres}
+{\em fd} & \-Descriptor del fitxer d'entrada. \-Paràmetre d'entrada. \\
+\hline
+\end{DoxyParams}
+
+
+\-Definició a la línia 93 del fitxer filtres.\-c.
+
+\hypertarget{filtres_8c_afd7a1b36922bf518c9bd7e8a848df96a}{\index{filtres.\-c@{filtres.\-c}!fs\-\_\-wc@{fs\-\_\-wc}}
+\index{fs\-\_\-wc@{fs\-\_\-wc}!filtres.c@{filtres.\-c}}
+\subsubsection[{fs\-\_\-wc}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf fs\-\_\-wc} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{filtres_8c_afd7a1b36922bf518c9bd7e8a848df96a}
+
+
+\-Filtre que compta el número de caràcters, paraules i línies del fitxer d'entrada. \-No retorna cap valor (void). 
+
+\-Aquest filtre rep un descriptor de fitxer de tipus enter (fd) i amb la funció read dins un bucle el tracta caràcter a caràcter i l'analitza detectant caràcters separadors de paraules o línies. \-Utilitza unes variables internes (nc, np, nl) per portar el compte del número de caràcters, paraules i línies del fitxer i crida a la funció printstr que les imprimirà pel dispositiu de sortida. 
+\begin{DoxyParams}{\-Paràmetres}
+{\em fd} & \-Descriptor del fitxer d'entrada. \-Paràmetre d'entrada. \\
+\hline
+\end{DoxyParams}
+
+
+\-Definició a la línia 66 del fitxer filtres.\-c.
+
+\hypertarget{filtres_8c_a6bc4e3de38e285d91873339766f429b8}{\index{filtres.\-c@{filtres.\-c}!printstr@{printstr}}
+\index{printstr@{printstr}!filtres.c@{filtres.\-c}}
+\subsubsection[{printstr}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf printstr} (
+\begin{DoxyParamCaption}
+\item[{int}]{num}
+\end{DoxyParamCaption}
+)}}\label{filtres_8c_a6bc4e3de38e285d91873339766f429b8}
+
+
+\-Funció que serveix per imprimir per pantalla el contingut d'una variable caràcter a caràcter. \-No retorna cap valor (void). 
+
+\-Aquesta funció rep una variable de tipus enter (num) i mitjançant un punter de memòria la recorre caràcter a caràcter, l'imprimeix al dispositiu de sortida (per defecte en pantalla), i avança fins al caràcter següent. 
+\begin{DoxyParams}{\-Paràmetres}
+{\em num} & \-Variable de tipus enter que volem imprimir en pantalla. \-Paràmetre d'entrada. \\
+\hline
+\end{DoxyParams}
+
+
+\-Definició a la línia 33 del fitxer filtres.\-c.
+
